@@ -1,5 +1,6 @@
 package com.hencoder.hencoderpracticedraw7.practice;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
@@ -46,7 +47,30 @@ public class Practice05AnimatorSetLayout extends RelativeLayout {
                 AnimatorSet animatorSet = new AnimatorSet();
                 // 用 AnimatorSet 的方法来让三个动画协作执行
                 // 要求 1： animator1 先执行，animator2 在 animator1 完成后立即开始
+                animatorSet.play(animator1).before(animator2);
                 // 要求 2： animator2 和 animator3 同时开始
+                animatorSet.play(animator2).with(animator3);
+                animator3.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        view.setTranslationX(-200);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                        view.setTranslationX(-200);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                });
 
                 animatorSet.start();
             }
